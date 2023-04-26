@@ -18,7 +18,7 @@
 
 <script>
 import axios from "axios";
-
+import cookies from "vue-cookies";
 export default {
   methods: {
     Signup(details) {
@@ -37,20 +37,23 @@ export default {
           },
           method: `POST`,
           data: {
-            email: `${email}`,
-            first_name: `${firstName}`,
-            last_name: `${lastName}`,
-            image_url: `${pfp}`,
-            username: `${username}`,
-            password: `${password}`,
+            email: email,
+            first_name: firstName,
+            last_name: lastName,
+            image_url: pfp,
+            username: username,
+            password: password,
           },
         })
         .then((response) => {
           response;
+          cookies.set(`token`, response.data.token);
+          cookies.set(`client_id`, response.data.client_id);
+          console.log(response);
         })
         .catch((error) => {
           error;
-          // Failure code here
+          console.log(error);
         });
     },
   },
